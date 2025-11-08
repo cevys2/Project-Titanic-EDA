@@ -53,7 +53,7 @@ Proyek ini mengikuti alur kerja analisis data standar:
 ---
 
 ## Temuan Utama & Visualisasi
-Analisis ini mengungkap beberapa faktor kunci yang sangat memengaruhi tingkat keselamatan:
+Analisis ini menceritakan sebuah kisah yang jelas tentang siapa yang selamat dan siapa yang tidak. Temuan-temuan ini tidak terpisah, melainkan saling terkait.
 
 <table width="100%">
   <tr>
@@ -78,20 +78,27 @@ Analisis ini mengungkap beberapa faktor kunci yang sangat memengaruhi tingkat ke
   </tr>
 </table>
 
-### Rangkuman Insight:
+### Rangkuman Insight: Sebuah Cerita dari Data
 
-#### 1. Faktor Status Sosial-Ekonomi (`Pclass`, `Fare`, & `Cabin`)
-Status sosial-ekonomi adalah prediktor kuat. Penumpang **Kelas 1 (`Pclass` 1)** memiliki tingkat keselamatan **~63%**, sedangkan **Kelas 3 (`Pclass` 3)** hanya **~24%**.
+#### 1. "Wanita dan Anak-anak Dulu" ... Tapi Bersyarat
+Frasa terkenal "wanita dan anak-anak dulu" terlihat sangat jelas dalam data. Analisis demografi menunjukkan:
+* **Jenis Kelamin (`Sex`):** Menjadi perempuan adalah faktor keselamatan terbesar. Sekitar **74% penumpang perempuan selamat**, sementara hanya **19% penumpang laki-laki** yang berhasil.
+* **Umur (`AgeGroup`):** Menjadi muda juga merupakan keuntungan besar. **Anak-anak (0-12 tahun)** memiliki tingkat selamat **~58%**, yang tertinggi dari semua kelompok umur. Sebaliknya, Lansia (60+) memiliki peluang terendah (~23%).
 
-*Insight* ini lebih dalam dari sekadar "kelas sosial". Data ini sangat terkait dengan **`Fare` (Harga Tiket)** dan **`Cabin` (Lokasi Kabin)**:
-* Meskipun 77% data `Cabin` hilang, data yang tersisa menunjukkan pola yang jelas. Penumpang **Kelas 1** hampir secara eksklusif berada di dek **A, B, C, atau D** (dek atas). Penumpang **Kelas 2 & 3** berada di dek **E, F, atau G** (dek bawah).
-* Ini sangat penting: Penumpang Kelas 1 membayar tarif termahal, yang memberi mereka kabin di **dek atas**, yang memiliki akses jauh lebih cepat dan mudah ke sekoci. Penumpang di dek bawah (Kelas 3) terjebak dan lebih jauh dari lokasi penyelamatan.
+#### 2. Faktor Kekayaan (`Pclass`, `Fare`, & `Cabin`)
+Namun, "wanita dan anak-anak dulu" tidak berlaku sama untuk semua orang. Faktor status sosial-ekonomi (yang diwakili oleh `Pclass`) adalah pembeda yang kejam:
+* Penumpang **Kelas 1 (`Pclass` 1)** memiliki tingkat keselamatan **~63%**.
+* Penumpang **Kelas 3 (`Pclass` 3)**, yang merupakan kelompok terbesar di kapal, hanya memiliki peluang selamat **~24%**.
 
-#### 2. Faktor Demografi (`Sex` & `AgeGroup`)
-Faktor-faktor ini mengonfirmasi hipotesis "wanita dan anak-anak dulu":
-* **Jenis Kelamin:** Faktor ini memiliki dampak paling signifikan. Sekitar **74% penumpang perempuan selamat**, dibandingkan dengan hanya **19% penumpang laki-laki**.
-* **Umur:** **Anak-anak (0-12 tahun) memiliki tingkat selamat tertinggi (~58%)**. Tingkat selamat kemudian menurun seiring bertambahnya usia, dengan Lansia (60+) memiliki peluang terendah (~23%).
-* **Hubungan Keduanya:** Analisis gabungan menunjukkan bahwa **perempuan di Kelas 1 & 2** (90%+ selamat) adalah kelompok paling aman. **Laki-laki di Kelas 2 & 3** (13-15% selamat) adalah yang paling tidak aman.
+*Insight* ini lebih dalam dari sekadar "kelas sosial". Data ini sangat terkait dengan **`Fare` (Harga Tiket)** dan **`Cabin` (Lokasi Kabin)**. Penumpang Kelas 1 membayar tarif termahal, yang memberi mereka kabin di **dek atas (A, B, C, D)**. Penumpang Kelas 3 ditempatkan di **dek bawah (E, F, G)**. Saat evakuasi, mereka yang berada di dek atas memiliki akses yang jauh lebih cepat dan mudah ke sekoci, sementara mereka yang berada di dek bawah terjebak.
 
-#### 3. Faktor Ukuran Keluarga (`FamilySize`)
-Peluang selamat tertinggi dimiliki oleh mereka yang bepergian dengan **keluarga kecil (1-3 orang)**. Bepergian sendirian (30% selamat) atau dengan keluarga yang sangat besar (0-20% selamat) ternyata jauh lebih berbahaya.
+#### 3. Hubungan Antar Faktor: Siapa yang Paling Aman?
+Ketika kita menggabungkan temuan di atas, ceritanya menjadi sangat jelas:
+* **Kelompok Paling Aman:** Perempuan di Kelas 1 & 2 (>90% selamat).
+* **Kelompok Paling Berisiko:** Laki-laki di Kelas 2 & 3 (~13-15% selamat).
+* Menariknya, analisis gabungan menunjukkan bahwa seorang **perempuan di Kelas 3 (50% selamat)** memiliki peluang selamat yang lebih baik daripada seorang **laki-laki di Kelas 1 (37% selamat)**.
+
+#### 4. Faktor Ukuran Keluarga (`FamilySize`)
+Terakhir, data menunjukkan bahwa bepergian dalam kelompok kecil itu ideal.
+* Peluang selamat tertinggi dimiliki oleh mereka yang bepergian dengan **keluarga kecil (1-3 orang)**.
+* Bepergian **sendirian (30% selamat)** atau dengan **keluarga yang sangat besar (0-20% selamat)** ternyata jauh lebih berbahaya, kemungkinan karena sulit untuk mengoordinasikan evakuasi.
