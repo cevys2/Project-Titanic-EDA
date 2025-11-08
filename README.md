@@ -5,7 +5,7 @@ Proyek ini adalah Analisis Data Eksploratif (EDA) pada dataset Titanic. Tujuanny
 
 Analisis ini dilakukan sepenuhnya di Python, menggunakan library **Pandas** untuk manipulasi data dan **Matplotlib/Seaborn** untuk visualisasi.
 
-![Screenshot Grafik Titanic](./titanic-charts.png)
+![Screenshot Grafik Titanic](./Titanic-Charts.png)
 
 ---
 
@@ -56,9 +56,4 @@ Status sosial-ekonomi adalah prediktor kuat kedua:
 ### 4. Faktor Ukuran Keluarga (`FamilySize`)
 Peluang selamat tertinggi dimiliki oleh mereka yang bepergian dengan **keluarga kecil (1-3 orang)**. Bepergian sendirian (30% selamat) atau dengan keluarga yang sangat besar (0-20% selamat) ternyata jauh lebih berbahaya.
 
----
-
-## Notebook Proyek
-Untuk melihat kode lengkap, analisis, dan semua visualisasi, silakan buka file Jupyter Notebook di repositori ini:
-
-[**Proyek_Titanic_Visual.ipynb**](./Proyek_Titanic_Visual.ipynb)
+-
