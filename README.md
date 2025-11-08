@@ -44,11 +44,11 @@ Proyek ini mengikuti alur kerja analisis data standar:
 
 1.  **Inspeksi Data:** Memuat data dan menggunakan `.info()` & `.describe()`.
 2.  **Identifikasi Masalah (Caveat):** Menemukan bahwa kolom `Age` memiliki 177 data hilang dan `Cabin` memiliki 687 data hilang.
-3.  **Pembersihan Data:** Mengisi nilai `Age` yang hilang menggunakan nilai rata-rata (*mean imputation*). Kolom `Cabin` diabaikan karena terlalu banyak data yang hilang.
-4.  **Feature Engineering:** Membuat kolom baru untuk analisis yang lebih dalam:
-    * `AgeGroup`: Mengelompokkan `Age` ke dalam kategori (Anak-anak, Remaja, Dewasa, Lansia).
-    * `FamilySize`: Menjumlahkan `SibSp` dan `Parch` untuk melihat dampak bepergian sendiri vs. berkelompok.
-5.  **Analisis & Visualisasi:** Menggunakan `.groupby()` dan `.value_counts()` untuk menemukan pola, dan `Seaborn` untuk memvisualisasikan setiap temuan kunci.
+3.  **Pembersihan Data:** Mengisi nilai `Age` yang hilang menggunakan nilai rata-rata (*mean imputation*). Kolom `Cabin` diabaikan untuk analisis *kuantitatif* karena terlalu banyak data yang hilang.
+4.  **Feature Engineering:**
+    * Membuat kolom `AgeGroup` (Anak-anak, Remaja, Dewasa, Lansia) dari data `Age` yang sudah bersih.
+    * Membuat kolom `FamilySize` dengan menjumlahkan `SibSp` dan `Parch`.
+5.  **Analisis & Visualisasi:** Menggunakan `.groupby()` dan `Seaborn` untuk menemukan dan memvisualisasikan setiap temuan kunci.
 
 ---
 
@@ -58,28 +58,40 @@ Analisis ini mengungkap beberapa faktor kunci yang sangat memengaruhi tingkat ke
 <table width="100%">
   <tr>
     <td width="50%" align="center">
-      <strong>Distribusi Keselamatan</strong><br>
-      <img src="chart_distribution.png" alt="Grafik Distribusi Survived" width="95%">
-    </td>
-    <td width="50%" align="center">
       <strong>Keselamatan berdasarkan Jenis Kelamin</strong><br>
       <img src="chart_sex.png" alt="Grafik Sex vs Survived" width="95%">
     </td>
-  </tr>
-  <tr>
     <td width="50%" align="center">
       <strong>Keselamatan berdasarkan Kelas Sosial</strong><br>
       <img src="chart_pclass.png" alt="Grafik Pclass vs Survived" width="95%">
     </td>
+  </tr>
+  <tr>
     <td width="50%" align="center">
       <strong>Keselamatan berdasarkan Kelompok Umur</strong><br>
       <img src="chart_agegroup.png" alt="Grafik AgeGroup vs Survived" width="95%">
+    </td>
+    <td width="50%" align="center">
+      <strong>Distribusi Keselamatan</strong><br>
+      <img src="chart_distribution.png" alt="Grafik Distribusi Survived" width="95%">
     </td>
   </tr>
 </table>
 
 ### Rangkuman Insight:
-* **Jenis Kelamin (`Sex`):** Faktor ini memiliki dampak paling signifikan. Sekitar **74% penumpang perempuan selamat**, dibandingkan dengan hanya **19% penumpang laki-laki**.
-* **Kelas Sosial (`Pclass`):** Status sosial-ekonomi adalah prediktor kuat. Penumpang **Kelas 1 (`Pclass` 1)** memiliki tingkat keselamatan **~63%**, sedangkan penumpang **Kelas 3 (`Pclass` 3)** hanya memiliki **~24%**. Ini sangat terkait dengan lokasi kabin di dek atas (Kelas 1) vs. dek bawah (Kelas 3).
-* **Kelompok Umur (`AgeGroup`):** **Anak-anak (0-12 tahun) memiliki tingkat selamat tertinggi (~58%)**. Ini mendukung hipotesis "wanita dan anak-anak dulu". Tingkat selamat kemudian menurun seiring bertambahnya usia, dengan Lansia (60+) memiliki peluang terendah (~23%).
-* **Ukuran Keluarga (`FamilySize`):** Bepergian sendirian (30% selamat) atau dengan keluarga yang sangat besar (0-20% selamat) adalah yang paling berbahaya. Peluang selamat tertinggi dimiliki oleh mereka yang bepergian dengan **keluarga kecil (1-3 orang)**.
+
+#### 1. Faktor Status Sosial-Ekonomi (`Pclass`, `Fare`, & `Cabin`)
+Status sosial-ekonomi adalah prediktor kuat. Penumpang **Kelas 1 (`Pclass` 1)** memiliki tingkat keselamatan **~63%**, sedangkan **Kelas 3 (`Pclass` 3)** hanya **~24%**.
+
+*Insight* ini lebih dalam dari sekadar "kelas sosial". Data ini sangat terkait dengan **`Fare` (Harga Tiket)** dan **`Cabin` (Lokasi Kabin)**:
+* Meskipun 77% data `Cabin` hilang, data yang tersisa menunjukkan pola yang jelas. Penumpang **Kelas 1** hampir secara eksklusif berada di dek **A, B, C, atau D** (dek atas). Penumpang **Kelas 2 & 3** berada di dek **E, F, atau G** (dek bawah).
+* Ini sangat penting: Penumpang Kelas 1 membayar tarif termahal, yang memberi mereka kabin di **dek atas**, yang memiliki akses jauh lebih cepat dan mudah ke sekoci. Penumpang di dek bawah (Kelas 3) terjebak dan lebih jauh dari lokasi penyelamatan.
+
+#### 2. Faktor Demografi (`Sex` & `AgeGroup`)
+Faktor-faktor ini mengonfirmasi hipotesis "wanita dan anak-anak dulu":
+* **Jenis Kelamin:** Faktor ini memiliki dampak paling signifikan. Sekitar **74% penumpang perempuan selamat**, dibandingkan dengan hanya **19% penumpang laki-laki**.
+* **Umur:** **Anak-anak (0-12 tahun) memiliki tingkat selamat tertinggi (~58%)**. Tingkat selamat kemudian menurun seiring bertambahnya usia, dengan Lansia (60+) memiliki peluang terendah (~23%).
+* **Hubungan Keduanya:** Analisis gabungan menunjukkan bahwa **perempuan di Kelas 1 & 2** (90%+ selamat) adalah kelompok paling aman. **Laki-laki di Kelas 2 & 3** (13-15% selamat) adalah yang paling tidak aman.
+
+#### 3. Faktor Ukuran Keluarga (`FamilySize`)
+Peluang selamat tertinggi dimiliki oleh mereka yang bepergian dengan **keluarga kecil (1-3 orang)**. Bepergian sendirian (30% selamat) atau dengan keluarga yang sangat besar (0-20% selamat) ternyata jauh lebih berbahaya.
