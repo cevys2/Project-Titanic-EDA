@@ -58,3 +58,10 @@ Analisis ini mengungkap beberapa faktor kunci yang sangat memengaruhi tingkat ke
 * **`Proyek_Titanic_Visual.ipynb`**: Ini adalah file Jupyter Notebook utama. Buka file ini untuk melihat semua kode, analisis, dan visualisasi.
 * **`train.csv`**: Ini adalah data mentah yang digunakan oleh notebook di atas. Anda harus memilikinya di folder yang sama agar kode bisa berjalan.
 * **File `.png`**: Ini adalah gambar-gambar yang digunakan untuk menampilkan visualisasi di file README ini.
+
+---
+
+## Notebook Proyek
+Untuk melihat kode lengkap, analisis, dan semua visualisasi, silakan buka file Jupyter Notebook di repositori ini:
+
+[**Proyek_Titanic_Visual.ipynb**](./Proyek_Titanic_Visual.ipynb)
